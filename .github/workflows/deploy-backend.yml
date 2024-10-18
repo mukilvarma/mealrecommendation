@@ -1,0 +1,37 @@
+name: Deploy Backend to AWS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v1
+      with:
+        java-version: '21'
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+    - name: Build Docker image
+      run: docker build -t mealrecommendation-backend .
+
+    - name: Log in to AWS ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Push to ECR
+      run: |
+        docker tag mealrecommendation-backend:latest <aws-account-id>.dkr.ecr.<region>.amazonaws.com/mealrecommendation-backend:latest
+        docker push <aws-account-id>.dkr.ecr.<region>.amazonaws.com/mealrecommendation-backend:latest
+
+    - name: Deploy to ECS
+      run: aws ecs update-service --cluster <your-cluster-name> --service <your-service-name> --force-new-deployment
