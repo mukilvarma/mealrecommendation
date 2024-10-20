@@ -3,8 +3,8 @@ server:
 
 api:
   edamam:
-    app-id: d6ed98eb
-    app-key: 084a3f01861a7a309ffdba6da9e8ad79
+    app-id: d6ed98ebXXXX
+    app-key: 084a3f01861a7a309ffdba6da9e8ad79XXXX
     recipe-search-url: https://api.edamam.com/api/recipes/v2
   google:
     api-key: google_key
