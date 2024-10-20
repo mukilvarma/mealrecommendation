@@ -3,7 +3,10 @@ name: Deploy Backend to AWS
 on:
   push:
     branches:
-      - main
+      - 'release_*'
+  pull_request:
+    branches:
+      - 'release_*'
 
 jobs:
   build:
