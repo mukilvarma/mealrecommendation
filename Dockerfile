@@ -4,6 +4,9 @@ FROM eclipse-temurin:21-jdk
 # Set the working directory
 WORKDIR /app
 
+# Ensure the target directory is clean
+RUN rm -rf /app/*
+
 # Copy the Maven project files
 COPY pom.xml .
 COPY mvnw .           # Copy the mvnw file
