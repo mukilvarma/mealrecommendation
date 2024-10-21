@@ -9,8 +9,8 @@ RUN rm -rf /app/*
 
 # Copy the Maven project files
 COPY pom.xml .
-COPY mvnw .           # Copy the mvnw file
-COPY .mvn .          # Copy the .mvn directory (if present)
+COPY mvnw .
+COPY .mvn .
 COPY src ./src
 
 # Make the mvnw script executable
