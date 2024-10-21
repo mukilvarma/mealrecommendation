@@ -12,9 +12,6 @@ COPY pom.xml .
 COPY .mvn .
 COPY src ./src
 
-# Make the mvnw script executable
-RUN chmod +x mvnw
-
 # Package the application
 RUN ./mvnw package -DskipTests
 
