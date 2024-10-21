@@ -9,7 +9,6 @@ RUN rm -rf /app/*
 
 # Copy the Maven project files
 COPY pom.xml .
-COPY mvnw .
 COPY .mvn .
 COPY src ./src
 
