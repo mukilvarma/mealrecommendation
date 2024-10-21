@@ -25,7 +25,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Build Docker image
-      run: docker build -t mealrecommendation-backend .
+      run: docker build -t mealrecommendation .
 
     - name: Log in to AWS ECR
       id: login-ecr
