@@ -13,32 +13,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-south-1
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
     
-    - name: Login to Amazon ECR
-      uses: aws-actions/amazon-ecr-login@v1
-      with:
-        registry-type: private
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: private
 
-    - name: Build Docker image
-      run: |
-        docker build -t mealrecommendation .
+      - name: Build Docker image
+        run: |
+          docker build -t mealrecommendation .
 
-    - name: Push to ECR
-      run: |
-        docker tag mealrecommendation:latest 340752798287.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mealrecommendation-backend:latest
-        docker push 340752798287.dkr.ecr.ap-south-1.amazonaws.com/mealrecommendation-backend:latest
+      - name: Push to ECR
+        run: |
+          docker tag mealrecommendation:latest 340752798287.dkr.ecr.ap-south-1.amazonaws.com/mealrecommendation-backend:latest
+          docker push 340752798287.dkr.ecr.ap-south-1.amazonaws.com/mealrecommendation-backend:latest
 
-    - name: Configure AWS CLI
-      run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws configure set region ap-south-1
-
-    - name: Deploy to ECS
-      run: aws ecs update-service --cluster mealrecommendation-backend --service mealrecommendationservice --force-new-deployment
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service --cluster mealrecommendation-backend --service mealrecommendationservice --force-new-deployment
