@@ -6,8 +6,8 @@ WORKDIR /app
 
 # Copy the Maven project files
 COPY pom.xml .
-COPY .mvn .
 COPY mvnw .
+COPY .mvn/wrapper .mvn/wrapper
 COPY src ./src
 
 # Ensure mvnw is executable
