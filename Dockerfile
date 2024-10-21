@@ -6,7 +6,12 @@ WORKDIR /app
 
 # Copy the Maven project files
 COPY pom.xml .
+COPY mvnw .           # Copy the mvnw file
+COPY .mvn .          # Copy the .mvn directory (if present)
 COPY src ./src
+
+# Make the mvnw script executable
+RUN chmod +x mvnw
 
 # Package the application
 RUN ./mvnw package -DskipTests
