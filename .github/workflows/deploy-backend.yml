@@ -39,4 +39,4 @@ jobs:
 
       - name: Deploy to ECS
         run: |
-          aws ecs update-service --cluster mealrecommendation-backend --service mealrecommendationservice --force-new-deployment
+          aws ecs update-service --cluster mealrecommendation --service mealrecommendationservice --force-new-deployment
