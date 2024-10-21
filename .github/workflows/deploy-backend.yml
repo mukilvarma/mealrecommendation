@@ -27,7 +27,6 @@ jobs:
 
     - name: Build Docker image
       run: |
-        chmod +x mvnw
         docker build -t mealrecommendation .
 
     - name: Push to ECR
