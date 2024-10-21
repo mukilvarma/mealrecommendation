@@ -36,7 +36,7 @@ jobs:
     - name: Push to ECR
       run: |
         docker tag mealrecommendation:latest 340752798287.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mealrecommendation-backend:latest
-        docker push 340752798287.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mealrecommendation-backend:latest
+        docker push 340752798287.dkr.ecr.ap-south-1.amazonaws.com/mealrecommendation-backend:latest
 
     - name: Configure AWS CLI
       run: |
