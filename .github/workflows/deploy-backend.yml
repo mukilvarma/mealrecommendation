@@ -3,10 +3,10 @@ name: Deploy Backend to AWS
 on:
   push:
     branches:
-      - 'release_*'
+      - 'main'
   pull_request:
     branches:
-      - 'release_*'
+      - 'main'
 
 jobs:
   build:
@@ -30,11 +30,21 @@ jobs:
     - name: Log in to AWS ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Push to ECR
       run: |
-        docker tag mealrecommendation-backend:latest <aws-account-id>.dkr.ecr.<region>.amazonaws.com/mealrecommendation-backend:latest
-        docker push <aws-account-id>.dkr.ecr.<region>.amazonaws.com/mealrecommendation-backend:latest
+        docker tag mealrecommendation-backend:latest 340752798287.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mealrecommendation-backend:latest
+        docker push 340752798287.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mealrecommendation-backend:latest
+
+    - name: Configure AWS CLI
+      run: |
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set region ${{ secrets.AWS_REGION }}
 
     - name: Deploy to ECS
-      run: aws ecs update-service --cluster <your-cluster-name> --service <your-service-name> --force-new-deployment
+      run: aws ecs update-service --cluster mealrecommendation-backend --service mealrecommendationservice --force-new-deployment
