@@ -22,6 +22,7 @@ spring:
     cors:
       allowed-origins:
         - "http://localhost:4200"
+        - "http://13.203.42.185"
       allowed-methods:
         - GET
         - POST
