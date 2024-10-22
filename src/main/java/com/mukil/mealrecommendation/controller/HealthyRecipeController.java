@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/healthy-recipes")
-@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+@CrossOrigin(origins = {"http://localhost:4200", "http://13.203.42.185"})
 @Tag(name = "Recipe Controller", description = "APIs for managing recipes")
 public class HealthyRecipeController {
 
